@@ -52,13 +52,11 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "mmadubugwuchibuife@gmail.com"
-                    git config user.name "Mmadubugwu Chibuife"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i '19 s/.*/        image: jmcglobal\\/java-app:${BUILD_NUMBER}/' spring-boot-yaml/deployment.yml
                     if [ ! -d "argocd-java-app/java-manifest" ]; then mkdir -p argocd-java-app/java-manifest; fi
                     cd argocd-java-app && rm -rf .git && git init
-                    if ! git remote | grep origin &> /dev/null; then git remote add origin https://github.com/Jmcglobal/argocd-java-app.git; fi
+                    git remote add origin https://github.com/Jmcglobal/argocd-java-app.git; fi
                     git config pull.rebase true && git pull origin master
                     cd java-manifest && rm -rf deployment.yml service.yml
                     if [[ ! -f "deployment.yaml" && ! -f "service.yaml" ]]; then cp -r ../../spring-boot-yaml/* . ; fi
