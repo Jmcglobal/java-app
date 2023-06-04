@@ -56,17 +56,20 @@ pipeline {
                     git config user.email "mmadubugwuchibuife@gmail.com"
                     git config user.name "Jmcglobal"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i '19 s/.*/        image: jmcglobal:${BUILD_NUMBER}/' spring-boot-yaml/deployment.yml
+                    sed -i '19 s/.*/        image: jmcglobal\/java-app:${BUILD_NUMBER}/' spring-boot-yaml/deployment.yml
                     if [ ! -d "argocd-java-app/java-manifest" ]; then mkdir -p argocd-java-app/java-manifest; fi
-                    cd argocd-java-app/java-manifest
+                    cd argocd-java-app && git init
+                    git remote add origin https://github.com/Jmcglobal/argocd-java-app.git
+                    git config pull.rebase true
+                    cd java-manifest && rm -rf deployment.yml service.yml
                     if [[ ! -f "deployment.yaml" && ! -f "service.yaml" ]]; then cp -r ../../spring-boot-yaml/* . ; fi
-                    git init
+                    cd .. 
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git remote add origin https://github.com/${GIT_USER_NAME/${GIT_REPO_NAME} HEAD:master
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                    rm -rf deployment.yml service.yml
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                     rm -rf .git
+                    cd java-manifest && rm -rf deployment.yml service.yml
+                   
 
                 '''
             }

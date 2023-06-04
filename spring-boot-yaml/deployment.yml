@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: jmcglobal/java-app:Tag
+        image: jmcglobal/java-app:Tag10
         ports:
         - containerPort: 8080
