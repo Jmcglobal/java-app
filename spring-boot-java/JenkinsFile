@@ -52,6 +52,7 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh ''' 
+                    git config --global --add safe.directory /var/lib/jenkins/workspace/jenkins-argocd/java-app
                     git config user.email "Mmadubugwuchibuife@gmail.com"
                     git config user.name "Jmcglobal"                 
                     BUILD_NUMBER=${BUILD_NUMBER}
@@ -61,7 +62,7 @@ pipeline {
                     git remote add origin https://github.com/Jmcglobal/argocd-java-app.git
                     git config pull.rebase true && git pull origin master
                     cd java-manifest && rm -rf deployment.yml service.yml
-                    if [[ ! -f "deployment.yaml" && ! -f "service.yaml" ]]; then cp -r ../../spring-boot-yaml/* . ; fi
+                    if [[ ! -f "deployment.yaml" && ! -f "service.yaml" ]]; then cp -r ../../spring-boot-yaml/* .; fi
                     cd .. 
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
