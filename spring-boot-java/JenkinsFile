@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://3.231.207.115:9000"  // sonar-server which is running on same server jenkins server
+        SONAR_URL = "http://18.213.247.237:9000"  // sonar-server which is running on same server jenkins server
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
