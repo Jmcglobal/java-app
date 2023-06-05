@@ -69,7 +69,7 @@ pipeline {
                     git config user.email "mmadubugwuchibuife@gmail.com"
                     git config user.name "Mmadubugwu Chibuife"
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://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@github.com/Jmcglobal/argocd-java-app
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                     rm -rf .git
                     cd java-manifest && rm -rf deployment.yml service.yml                   
                 '''
