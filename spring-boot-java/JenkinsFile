@@ -65,6 +65,8 @@ pipeline {
                     cd .. 
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git config --global user.email "Mmadubugwuchibuife@gmail.com"
+                    git config --global user.name "Jmcglobal"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                     rm -rf .git
                     cd java-manifest && rm -rf deployment.yml service.yml                   
