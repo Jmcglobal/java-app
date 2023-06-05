@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://18.213.247.237:9000"  // sonar-server which is running on same server jenkins server
+        SONAR_URL = "http://44.212.220.1:9000"  // sonar-server which is running on same server jenkins server
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
@@ -61,6 +61,7 @@ pipeline {
                     git config --global --add safe.directory /var/lib/jenkins/workspace/jenkins-argocd/argocd-java-app
                     rm -rf .git && git init
                     git remote add origin https://github.com/Jmcglobal/argocd-java-app.git
+                    rm -rf java-manifest
                     git config pull.rebase true && git pull origin master
                     cd java-manifest && rm -rf deployment.yml service.yml
                     if [ ! -f "deployment.yaml" ] && [ ! -f "service.yaml" ]; then cp -r ../../spring-boot-yaml/* .; fi
